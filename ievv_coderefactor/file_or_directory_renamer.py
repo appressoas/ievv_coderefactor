@@ -16,6 +16,8 @@ class FileOrDirectoryRenamer(object):
         """
         self.root_directory = os.path.normpath(root_directory)
         self.original_path = path
+        if not self.original_path.startswith('/'):
+            self.original_path = '/{}'.format(self.original_path)
         self.replacers = replacers
         self.new_path = self._make_new_path()
 
@@ -28,13 +30,18 @@ class FileOrDirectoryRenamer(object):
             new_path = replacer.replace(new_path)
         return new_path
 
+    def _make_absolute_path(self, path):
+        if path.startswith('/'):
+            path = path.lstrip('/')
+        return os.path.join(self.root_directory, os.path.normpath(path))
+
     @property
     def original_absolute_path(self):
-        return os.path.join(self.root_directory, os.path.normpath(self.original_path))
+        return self._make_absolute_path(self.original_path)
 
     @property
     def new_absolute_path(self):
-        return os.path.join(self.root_directory, os.path.normpath(self.new_path))
+        return self._make_absolute_path(self.new_path)
 
     @property
     def is_directory(self):

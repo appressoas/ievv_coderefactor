@@ -8,7 +8,7 @@ class DirectoryTreeWalker(object):
         if patterns is None:
             return True
         for pattern in patterns:
-            if fnmatch.fnmatch(path, pattern):
+            if fnmatch.fnmatch('/{}'.format(path), pattern):
                 return True
         return False
 
@@ -16,6 +16,9 @@ class DirectoryTreeWalker(object):
         raise NotImplementedError()
 
     def get_exclude_directories(self):
+        raise NotImplementedError()
+
+    def get_exclude_files(self):
         raise NotImplementedError()
 
     def get_filepatterns(self):
@@ -37,6 +40,8 @@ class DirectoryTreeWalker(object):
                     if os.path.islink(filepath):
                         continue
                     relative_filepath = os.path.relpath(filepath, self.get_root_directory())
+                    if self.__fnmatch_many(relative_filepath, self.get_exclude_files()):
+                        continue
                     if self.__fnmatch_many(relative_filepath, self.get_filepatterns()):
                         yield relative_filepath
 

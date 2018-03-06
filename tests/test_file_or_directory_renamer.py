@@ -13,7 +13,7 @@ class TestFileOrDirectoryRenamer(DirectoryAndFileMixin, TestCase):
             root_directory=self.temporary_directory,
             path=os.path.join('my', 'old'),
             replacers=[
-                RegexReplacer(r'^my/old$', 'my/new'),
+                RegexReplacer(r'^/my/old$', '/my/new'),
             ])
         self.assertEqual(filerenamer.original_absolute_path,
                          os.path.join(self.temporary_directory, 'my', 'old'))
@@ -31,7 +31,7 @@ class TestFileOrDirectoryRenamer(DirectoryAndFileMixin, TestCase):
             root_directory=self.temporary_directory,
             path=os.path.join(*filepath),
             replacers=[
-                RegexReplacer(r'^my/old/test.py$', 'my/new/supertest.py'),
+                RegexReplacer(r'^/my/old/test.py$', '/my/new/supertest.py'),
             ])
         self.assertEqual(filerenamer.original_absolute_path,
                          os.path.join(self.temporary_directory, 'my', 'old', 'test.py'))

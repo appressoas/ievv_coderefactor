@@ -51,15 +51,15 @@ class TestRefactorTree(DirectoryAndFileMixin, TestCase):
                 [
                     {
                         'replacer': 'RegexReplacer',
-                        'pattern': '^my/old/test.py$',
-                        'replacement': 'my/supernew/test.py'
+                        'pattern': '^/my/old/test.py$',
+                        'replacement': '/my/supernew/test.py'
                     },
                 ],
                 [
                     {
                         'replacer': 'RegexReplacer',
-                        'pattern': '^my/old$',
-                        'replacement': 'my/new'
+                        'pattern': '^/my/old$',
+                        'replacement': '/my/new'
                     },
                 ]
             ]

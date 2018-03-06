@@ -29,7 +29,7 @@
       // Rename example1/myfunctions.py to example1/new_myfunctions.py
       {
         "replacer": "RegexReplacer",
-        "pattern": "^example1/myfunctions.py$",
+        "pattern": "^/example1/myfunctions.py$",
         "replacement": "example1/new_myfunctions.py"
       }
     ],
@@ -37,7 +37,7 @@
       // Rename example1 directory to new_example1
       {
         "replacer": "RegexReplacer",
-        "pattern": "^example1$",
+        "pattern": "^/example1$",
         "replacement": "new_example1"
       }
     ]

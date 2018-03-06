@@ -18,9 +18,10 @@ class RefactorFiles(DirectoryTreeWalker):
         return dict(filepatterns=filepatterns,
                     replacers=replacers)
 
-    def __init__(self, root_directory, exclude_directories, filepatterns, replacers):
+    def __init__(self, root_directory, exclude_directories, exclude_files, filepatterns, replacers):
         self.root_directory = root_directory
         self.exclude_directories = exclude_directories
+        self.exclude_files = exclude_files
         self.filepatterns = filepatterns
         self.replacers = replacers
 
@@ -29,6 +30,9 @@ class RefactorFiles(DirectoryTreeWalker):
 
     def get_exclude_directories(self):
         return self.exclude_directories
+
+    def get_exclude_files(self):
+        return self.exclude_files
 
     def get_filepatterns(self):
         return self.filepatterns
@@ -57,9 +61,10 @@ class RenameFilesOrDirectories(DirectoryTreeWalker):
             replacers.append(replacer)
         return dict(replacers=replacers)
 
-    def __init__(self, root_directory, exclude_directories, replacers):
+    def __init__(self, root_directory, exclude_directories, exclude_files, replacers):
         self.root_directory = root_directory
         self.exclude_directories = exclude_directories
+        self.exclude_files = exclude_files
         self.replacers = replacers
 
     def get_root_directory(self):
@@ -67,6 +72,9 @@ class RenameFilesOrDirectories(DirectoryTreeWalker):
 
     def get_exclude_directories(self):
         return self.exclude_directories
+
+    def get_exclude_files(self):
+        return self.exclude_files
 
     def rename(self, pretend=False, logger=None):
         for path in self.iter_walk_files_and_directories():
@@ -87,6 +95,7 @@ class RefactorTree(object):
             ".git",
             "**/.git"
         }
+        self.exclude_files = set()
         self.refactor_files_objects = []
         self.rename_files_or_directories_objects = []
 
@@ -109,13 +118,14 @@ class RefactorTree(object):
 
         Args:
             **refactor_files_kwargs: kwargs for :class:`ievv_coderefactor.refactor_tree.RefactorFiles`.
-                Do not include ``root_directory`` or ``exclude_directories`` - they are added
+                Do not include ``root_directory``, ``exclude_directories`` or ``exclude_files`` - they are added
                 automatically.
         """
         self.refactor_files_objects.append(
             RefactorFiles(
                 root_directory=self.root_directory,
                 exclude_directories=self.exclude_directories,
+                exclude_files=self.exclude_files,
                 **refactor_files_kwargs)
         )
 
@@ -125,19 +135,23 @@ class RefactorTree(object):
 
         Args:
             **kwargs: kwargs for :class:`ievv_coderefactor.refactor_tree.RenameFilesOrDirectories`.
-                Do not include ``root_directory`` or ``exclude_directories`` - they are added
+                Do not include ``root_directory``, ``exclude_directories`` or ``exclude_files`` - they are added
                 automatically.
         """
         self.rename_files_or_directories_objects.append(
             RenameFilesOrDirectories(
                 root_directory=self.root_directory,
                 exclude_directories=self.exclude_directories,
+                exclude_files=self.exclude_files,
                 **kwargs
             )
         )
 
     def add_exclude_directories(self, *exclude_directories):
         self.exclude_directories.update(*exclude_directories)
+
+    def add_exclude_files(self, *exclude_files):
+        self.exclude_files.update(*exclude_files)
 
     def refactor(self, pretend=False, logger=None):
         for refactor_files_object in self.refactor_files_objects:
