@@ -3,16 +3,19 @@
     {
       "filepatterns": ["*.py"],
       "replacers": [
+        // Refactor example1.myfunctions imports to example1.new_myfunctions
         {
           "replacer": "RegexReplacer",
           "pattern": "from\\s+example1\\.myfunctions",
           "replacement": "from example1.new_myfunction"
         },
+        // Refactor example1. to new_example1.
         {
           "replacer": "RegexReplacer",
           "pattern": "(^|\\s+)example1\\.",
           "replacement": "\\1new_example1."
         },
+        // Refactor example1/ to new_example1/
         {
           "replacer": "RegexReplacer",
           "pattern": "example1/",
@@ -23,6 +26,7 @@
   ],
   "rename": [
     [
+      // Rename example1/myfunctions.py to example1/new_myfunctions.py
       {
         "replacer": "RegexReplacer",
         "pattern": "^example1/myfunctions.py$",
@@ -30,6 +34,7 @@
       }
     ],
     [
+      // Rename example1 directory to new_example1
       {
         "replacer": "RegexReplacer",
         "pattern": "^example1$",
