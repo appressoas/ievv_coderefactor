@@ -1,0 +1,31 @@
+{
+  "exclude_directories": [
+    "**/node_modules",
+    ".git",
+    "**/.git"
+  ],
+  "directories": [
+    {
+      "renamer": "RegexRename",
+      "pattern": "^mytemplates/my_old_module$",
+      "replacement": "mytemplates/my_new_module"
+    }
+  ],
+  "files": [
+    {
+      "filepatterns": ["*.py"],
+      "renamers": [
+        {
+          "renamer": "RegexRename",
+          "pattern": "from mylibrary\\.old_myfunctions",
+          "replacement": "from mylibrary\\.new_myfunctions"
+        },
+        {
+          "renamer": "RegexRename",
+          "pattern": "my_old_module(\\.|\\/)",
+          "replacement": "my_new_module\\1"
+        }
+      ]
+    }
+  ]
+}
