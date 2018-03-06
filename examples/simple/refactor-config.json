@@ -1,0 +1,35 @@
+{
+  "refactor_files": [
+    {
+      "filepatterns": ["*.py"],
+      "replacers": [
+        {
+          "replacer": "RegexReplacer",
+          "pattern": "from\\s+example1\\.myfunctions",
+          "replacement": "from example1.new_myfunction"
+        },
+        {
+          "replacer": "RegexReplacer",
+          "pattern": "(^|\\s+)example1(\\.|\\/)",
+          "replacement": "\\1new_example1\\2"
+        },
+      ]
+    }
+  ],
+  "rename": [
+    [
+      {
+        "replacer": "RegexReplacer",
+        "pattern": "^example1/myfunctions.py$",
+        "replacement": "example1/new_myfunctions.py"
+      }
+    ],
+    [
+      {
+        "replacer": "RegexReplacer",
+        "pattern": "^example1$",
+        "replacement": "new_example1"
+      }
+    ]
+  ]
+}
