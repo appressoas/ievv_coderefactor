@@ -6,7 +6,7 @@ import fire
 
 class Cli(object):
     """
-    Migrate a codebase using django_cradmin 1x to using cradmin_legacy.
+    Migrate a codebase from JSON config file.
     """
     def _make_exclude_directories(self, extra_exclude_directories):
         exclude_directories = [
@@ -14,7 +14,7 @@ class Cli(object):
             '.git',
             '**/.git',
         ]
-        exclude_directories.extend(exclude_directories)
+        exclude_directories.extend(extra_exclude_directories)
         return exclude_directories
 
     def _fnmatch_many(self, path, patterns):

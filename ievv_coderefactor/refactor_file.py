@@ -6,9 +6,9 @@ from ievv_coderefactor import colorize
 
 
 class RefactorFile(object):
-    def __init__(self, filepath, renamers):
+    def __init__(self, filepath, replacers):
         self.filepath = filepath
-        self.renamers = renamers
+        self.replacers = replacers
         self.original_filecontent = open(self.filepath, 'rb').read().decode('utf-8')
         self.new_filecontent = self._refactor_to_string()
 
@@ -17,7 +17,7 @@ class RefactorFile(object):
 
     def _refactor_to_string(self):
         new_string = self.original_filecontent
-        for replacer in self.renamers:
+        for replacer in self.replacers:
             new_string = replacer.replace(new_string)
         return new_string
 

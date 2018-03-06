@@ -4,28 +4,35 @@
     ".git",
     "**/.git"
   ],
-  "directories": [
-    {
-      "renamer": "RegexRename",
-      "pattern": "^mytemplates/my_old_module$",
-      "replacement": "mytemplates/my_new_module"
-    }
-  ],
   "files": [
     {
       "filepatterns": ["*.py"],
-      "renamers": [
+      "rename": [
         {
-          "renamer": "RegexRename",
+          "replacer": "RegexReplace",
+          "pattern": "^mymodule/my_old_module/oldfile.py$",
+          "replacement": "mymodule/my_old_module/newfile.py"
+        }
+      ],
+      "refactor": [
+        {
+          "replacer": "RegexReplace",
           "pattern": "from mylibrary\\.old_myfunctions",
           "replacement": "from mylibrary\\.new_myfunctions"
         },
         {
-          "renamer": "RegexRename",
+          "replacer": "RegexReplace",
           "pattern": "my_old_module(\\.|\\/)",
           "replacement": "my_new_module\\1"
         }
       ]
     }
-  ]
+  ],
+  "directories": [
+    {
+      "replacer": "RegexReplace",
+      "pattern": "^mytemplates/my_old_module$",
+      "replacement": "mytemplates/my_new_module"
+    }
+  ],
 }
