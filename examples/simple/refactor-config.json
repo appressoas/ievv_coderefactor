@@ -10,8 +10,13 @@
         },
         {
           "replacer": "RegexReplacer",
-          "pattern": "(^|\\s+)example1(\\.|\\/)",
-          "replacement": "\\1new_example1\\2"
+          "pattern": "(^|\\s+)example1\\.",
+          "replacement": "\\1new_example1."
+        },
+        {
+          "replacer": "RegexReplacer",
+          "pattern": "example1/",
+          "replacement": "new_example1/"
         }
       ]
     }
