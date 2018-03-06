@@ -1,7 +1,10 @@
 {
   "refactor_files": [
     {
+      // List of regexes for files to match
       "filepatterns": ["^.*\\.py$"],
+
+      // List of replacements to make in each matched file
       "replacers": [
         // Refactor example1.myfunctions imports to example1.new_myfunctions
         {
@@ -24,7 +27,13 @@
       ]
     }
   ],
+
+  // List of lists of file and directory renames to make.
+  // The reason why this is a list of lists, is that the tree
+  // is walked from the top down, and some renames are fairly error
+  // prone if you can not group your renames
   "rename": [
+    // These renames is performed first (the entire file tree is walked looking for files and directories to rename)
     [
       // Rename example1/myfunctions.py to example1/new_myfunctions.py
       {
@@ -33,6 +42,9 @@
         "replacement": "example1/new_myfunctions.py"
       }
     ],
+
+    // These renames is performed after the list of renames above is completely done.
+    // This means that the patterns here matches against files renamed in previous rename "groups".
     [
       // Rename example1 directory to new_example1
       {
