@@ -15,6 +15,7 @@ class DirectoryAndFileMixin(object):
         full_path = os.path.join(self.temporary_directory, *pathlist)
         if not os.path.exists(full_path):
             os.makedirs(full_path)
+        return full_path
 
     def make_file(self, pathlist, content):
         self.make_directory(pathlist[:-1])
