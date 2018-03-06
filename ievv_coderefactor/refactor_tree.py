@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from ievv_coderefactor import replacer_registry
 from ievv_coderefactor.directorytreewalker import DirectoryTreeWalker
 from ievv_coderefactor.file_or_directory_renamer import FileOrDirectoryRenamer
@@ -39,14 +40,14 @@ class RefactorFiles(DirectoryTreeWalker):
 
     def refactor(self, pretend=False, logger=None):
         for filepath in self.iter_walk_files():
-            refactorer = RefactorFile(
+            refactor_file = RefactorFile(
                 root_directory=self.root_directory,
                 filepath=filepath,
                 replacers=self.replacers)
             if logger:
-                logger.log(refactorer)
+                logger.log_refactor_file(refactor_file=refactor_file)
             if not pretend:
-                refactorer.refactor()
+                refactor_file.refactor()
 
 
 class RenameFilesOrDirectories(DirectoryTreeWalker):
@@ -78,14 +79,15 @@ class RenameFilesOrDirectories(DirectoryTreeWalker):
 
     def rename(self, pretend=False, logger=None):
         for path in self.iter_walk_files_and_directories():
-            renamer = FileOrDirectoryRenamer(
+            file_or_directory_renamer = FileOrDirectoryRenamer(
                 root_directory=self.root_directory,
                 path=path,
                 replacers=self.replacers)
             if logger:
-                logger.log(renamer)
+                logger.log_rename_file_or_directory(
+                    file_or_directory_renamer=file_or_directory_renamer)
             if not pretend:
-                renamer.rename()
+                file_or_directory_renamer.rename()
 
 
 class RefactorTree(object):

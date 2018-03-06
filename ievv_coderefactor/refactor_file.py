@@ -1,7 +1,6 @@
+from __future__ import unicode_literals
+
 import difflib
-
-import sys
-
 import os
 
 from ievv_coderefactor import colorize
@@ -42,15 +41,20 @@ class RefactorFile(object):
                 continue
             yield diffline
 
-    def print_diff(self):
+    def get_formatted_diff(self, use_colors=False, indent=''):
         if not self.did_update():
             return
-        print(colorize.colored_text('{}:'.format(self.filepath), colorize.COLOR_BLUE, bold=True))
+        outlines = []
         for diffline in self.iter_difflines():
-            if diffline.startswith('+'):
-                color = colorize.COLOR_GREEN
-            elif diffline.startswith('-'):
-                color = colorize.COLOR_RED
-            else:
-                color = colorize.COLOR_GREY
-            sys.stdout.write(colorize.colored_text(diffline, color))
+            color = None
+            if use_colors:
+                if diffline.startswith('+'):
+                    color = colorize.COLOR_GREEN
+                elif diffline.startswith('-'):
+                    color = colorize.COLOR_RED
+                else:
+                    color = colorize.COLOR_GREY
+            if color:
+                diffline = colorize.colored_text(diffline, color)
+            outlines.append('{}{}'.format(indent, diffline))
+        return ''.join(outlines)

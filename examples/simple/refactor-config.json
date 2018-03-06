@@ -39,7 +39,7 @@
       {
         "replacer": "RegexReplacer",
         "pattern": "^/example1/myfunctions.py$",
-        "replacement": "example1/new_myfunctions.py"
+        "replacement": "/example1/new_myfunctions.py"
       }
     ],
 
@@ -50,7 +50,7 @@
       {
         "replacer": "RegexReplacer",
         "pattern": "^/example1$",
-        "replacement": "new_example1"
+        "replacement": "/new_example1"
       }
     ]
   ]
