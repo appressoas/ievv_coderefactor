@@ -92,8 +92,7 @@ class RefactorTree(object):
     def __init__(self, root_directory):
         self.root_directory = root_directory
         self.exclude_directories = {
-            ".git",
-            "**/.git"
+            "^.*\.git$"
         }
         self.exclude_files = set()
         self.refactor_files_objects = []

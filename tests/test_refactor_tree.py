@@ -14,7 +14,7 @@ class TestRefactorTree(DirectoryAndFileMixin, TestCase):
         treerefactor.configure_from_dict({
             'refactor_files': [
                 {
-                    'filepatterns': ['*.py'],
+                    'filepatterns': [r'^.*\.py$'],
                     'replacers': [
                         {
                             'replacer': 'RegexReplacer',

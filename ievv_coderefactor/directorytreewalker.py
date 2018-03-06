@@ -2,13 +2,16 @@ import fnmatch
 
 import os
 
+import re
+
 
 class DirectoryTreeWalker(object):
-    def __fnmatch_many(self, path, patterns):
+    def __regexmatch_many(self, path, patterns):
         if patterns is None:
             return True
         for pattern in patterns:
-            if fnmatch.fnmatch('/{}'.format(path), pattern):
+            isolated_path = '/{}'.format(path)
+            if re.match(pattern, isolated_path):
                 return True
         return False
 
@@ -30,7 +33,7 @@ class DirectoryTreeWalker(object):
             for subdirectory in subdirectories:
                 subdirectorypath = os.path.join(directory, subdirectory)
                 relative_subdirectorypath = os.path.relpath(subdirectorypath, self.get_root_directory())
-                if self.__fnmatch_many(relative_subdirectorypath, exclude_directories):
+                if self.__regexmatch_many(relative_subdirectorypath, exclude_directories):
                     subdirectories.remove(subdirectory)
                 elif include_directories:
                     yield relative_subdirectorypath
@@ -40,9 +43,9 @@ class DirectoryTreeWalker(object):
                     if os.path.islink(filepath):
                         continue
                     relative_filepath = os.path.relpath(filepath, self.get_root_directory())
-                    if self.__fnmatch_many(relative_filepath, self.get_exclude_files()):
+                    if self.__regexmatch_many(relative_filepath, self.get_exclude_files()):
                         continue
-                    if self.__fnmatch_many(relative_filepath, self.get_filepatterns()):
+                    if self.__regexmatch_many(relative_filepath, self.get_filepatterns()):
                         yield relative_filepath
 
     def iter_walk_files_and_directories(self):

@@ -1,7 +1,7 @@
 {
   "refactor_files": [
     {
-      "filepatterns": ["*.py"],
+      "filepatterns": ["^.*\\.py$"],
       "replacers": [
         // Refactor example1.myfunctions imports to example1.new_myfunctions
         {
