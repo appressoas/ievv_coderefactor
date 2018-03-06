@@ -13,7 +13,9 @@ class Cli(object):
     """
     def refactor(self, directory, config, pretend=False):
         refactor_tree = RefactorTree(root_directory=os.path.abspath(directory))
-        refactor_tree.configure_from_dict(config_dict=json.loads(config))
+        with open(config, 'r') as configfile:
+            configjson = configfile.read()
+        refactor_tree.configure_from_dict(config_dict=json.loads(configjson))
         refactor_tree.refactor(pretend=pretend)
 
 

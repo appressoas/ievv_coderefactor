@@ -12,7 +12,7 @@
           "replacer": "RegexReplacer",
           "pattern": "(^|\\s+)example1(\\.|\\/)",
           "replacement": "\\1new_example1\\2"
-        },
+        }
       ]
     }
   ],
