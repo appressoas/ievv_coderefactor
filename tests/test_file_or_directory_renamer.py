@@ -2,7 +2,7 @@ import os
 from unittest import TestCase
 
 from ievv_coderefactor.file_or_directory_renamer import FileOrDirectoryRenamer
-from ievv_coderefactor.replacers import RegexReplacer
+from ievv_coderefactor.replacer_registry import RegexReplacer
 from tests.directory_and_file_mixin import DirectoryAndFileMixin
 
 

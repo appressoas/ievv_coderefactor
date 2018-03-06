@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ievv_coderefactor.replacers import RegexReplacer, StringReplacer
+from ievv_coderefactor.replacer_registry import RegexReplacer, StringReplacer
 
 
 class TestStringReplacer(TestCase):

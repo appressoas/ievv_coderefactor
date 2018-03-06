@@ -2,15 +2,23 @@ import difflib
 
 import sys
 
+import os
+
 from ievv_coderefactor import colorize
 
 
 class RefactorFile(object):
-    def __init__(self, filepath, replacers):
+    def __init__(self, root_directory, filepath, replacers):
+        self.root_directory = root_directory
         self.filepath = filepath
         self.replacers = replacers
-        self.original_filecontent = open(self.filepath, 'rb').read().decode('utf-8')
+        with open(self.absolute_filepath, 'rb') as f:
+            self.original_filecontent = f.read().decode('utf-8')
         self.new_filecontent = self._refactor_to_string()
+
+    @property
+    def absolute_filepath(self):
+        return os.path.join(self.root_directory, self.filepath)
 
     def did_update(self):
         return self.original_filecontent != self.new_filecontent
@@ -22,7 +30,7 @@ class RefactorFile(object):
         return new_string
 
     def refactor(self):
-        with open(self.filepath, 'wb') as f:
+        with open(self.absolute_filepath, 'wb') as f:
             f.write(self.new_filecontent.encode('utf-8'))
 
     def iter_difflines(self):
