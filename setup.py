@@ -14,7 +14,7 @@ setup(
     ],
     include_package_data=True,
     zip_safe=False,
-    license='BSD',
+    license='MIT',
     entry_points={
         "console_scripts": ['ievv-coderefactor = ievv_coderefactor.cli:main']
     },
