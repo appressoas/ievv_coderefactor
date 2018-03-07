@@ -7,6 +7,7 @@ setup(
     version='1.0.0',
     author='Appresso AS',
     author_email='post@appresso.no',
+    url='https://github.com/appressoas/ievv_coderefactor',
     packages=find_packages(),
     install_requires=[
         'termcolor',
