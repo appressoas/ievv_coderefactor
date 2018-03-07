@@ -1,6 +1,7 @@
 import json
 import os
 
+import datetime
 import fire
 
 from ievv_coderefactor import colorize
@@ -13,8 +14,16 @@ class Cli(object):
     """
     Migrate a codebase from JSON config file.
     """
+
+    def _setup_plainlogfile(self, plain_logfile_directory):
+        if not os.path.exists(plain_logfile_directory):
+            os.mkdir(plain_logfile_directory)
+        plain_logfile_path = os.path.join(plain_logfile_directory,
+                                          '{}-log.txt'.format(datetime.datetime.now().isoformat()))
+        return plain_logfile_path
+
     def refactor(self, directory, config, pretend=False, stdout_loglevel='summary',
-                 plain_logfile_path=None):
+                 plain_logfile_directory='ievv-coderefactor-logs'):
         refactor_tree = RefactorTree(root_directory=os.path.abspath(directory))
         with open(config, 'r') as configfile:
             configjson = configfile.read()
@@ -22,6 +31,8 @@ class Cli(object):
 
         if stdout_loglevel == 'none':
             stdout_loglevel = None
+
+        plain_logfile_path = self._setup_plainlogfile(plain_logfile_directory=plain_logfile_directory)
         logger = RefactorLogger(stdout_loglevel=stdout_loglevel,
                                 plain_logfile_path=plain_logfile_path,
                                 pretend=pretend)
